@@ -19,7 +19,7 @@ connection.connect(function (err){
 
 });
 
-//using inquirer to recieve users input/data
+//using inquirer to recieve users data
 function employeeSearch() {
     inquirer
         .prompt({
@@ -42,20 +42,26 @@ function employeeSearch() {
             
         })
 
-        //questions for each specific departments
+        //questions for each specific departments using inquirer
         function addDept(){
             inquirer
             .prompt ({
                 name: "action",
                 type: "text",
-                message:" What department would you like to add?",
+                message:"What department would you like to add?",
 
-            }).then(fuction(answer){
-                connection.query
+            }).then(function(answer){
+                //
+                connection.query("INSERT INTO role (title) VALUES (?)", [answer.action], (err,res)=>{
+                    if (err) throw err;
+                    console.log("role successfully added");
+                    startSearch()
+                });
 
-            }
-            )
-        }
+            });
+            
+           
+        };
 
 };
 
